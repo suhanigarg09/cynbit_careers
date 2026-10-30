@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Cynbit Careers{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="logo">
+            <span class="logo-mark">C</span>
+            cynbit<span class="logo-light">careers</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Explore Jobs</a>
+            <a href="{{ url_for('applications') }}">Track Application</a>
+            <a href="https://www.cynbit.in/" target="_blank"
+               rel="noopener noreferrer">Official Website ↗</a>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <main>
+        {% if error_message %}
+            <section class="empty-state">
+                <h1>Page not found</h1>
+                <p>{{ error_message }}</p>
+                <a href="{{ url_for('index') }}" class="btn-primary">
+                    Back to Careers
+                </a>
+            </section>
+        {% else %}
+            {% block content %}{% endblock %}
+        {% endif %}
+    </main>
+
+    <footer>
+        <div>
+            <h3>cynbit careers</h3>
+            <p>An independent careers portal prototype.</p>
+        </div>
+        <p>Built as a website improvement project.</p>
+        <p>© 2026 Prototype</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }} | Cynbit Careers{% endblock %}
+
+{% block content %}
+
+<section class="detail-container">
+
+    <a href="{{ url_for('index') }}" class="back-link">
+        ← Back to opportunities
+    </a>
+
+    <div class="detail-card">
+
+        <span class="job-category">{{ job.department }}</span>
+
+        <h1>{{ job.title }}</h1>
+
+        <div class="job-meta">
+            <span>📍 {{ job.location }}</span>
+            <span>💼 {{ job.job_type }}</span>
+        </div>
+
+        <hr>
+
+        <h2>About this opportunity</h2>
+        <p>{{ job.description }}</p>
+
+        <h2>Required skills</h2>
+        <p>{{ job.requirements }}</p>
+
+        <div class="detail-actions">
+            <a href="{{ url_for('apply', job_id=job.id) }}"
+               class="btn-primary">
+                Apply Now →
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

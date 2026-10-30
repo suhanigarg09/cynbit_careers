@@ -1,0 +1,126 @@
+
+{% extends "base.html" %}
+
+{% block title %}Explore Opportunities | Cynbit Careers{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="eyebrow">YOUR NEXT OPPORTUNITY STARTS HERE</span>
+
+        <h1>
+            Find work that<br>
+            <span>moves you forward.</span>
+        </h1>
+
+        <p>
+            Explore opportunities, discover your strengths
+            and take the next step in your career journey.
+        </p>
+
+        <a href="#jobs" class="btn-primary">Explore Opportunities ↓</a>
+    </div>
+
+    <div class="hero-stat">
+        <h2>{{ jobs|length }}</h2>
+        <p>Matching opportunities</p>
+    </div>
+</section>
+
+<section class="jobs-section" id="jobs">
+
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">CAREER OPPORTUNITIES</span>
+            <h2>Explore open positions</h2>
+            <p>Find a role that matches your interests and skills.</p>
+        </div>
+    </div>
+
+    <form method="GET" action="{{ url_for('index') }}"
+          class="filter-panel">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search job title or skills..."
+            value="{{ search }}"
+        >
+
+        <select name="department">
+            <option value="">All Departments</option>
+            {% for item in departments %}
+                <option value="{{ item.department }}"
+                    {% if selected_department == item.department %}
+                    selected
+                    {% endif %}>
+                    {{ item.department }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="location">
+            <option value="">All Locations</option>
+            {% for item in locations %}
+                <option value="{{ item.location }}"
+                    {% if selected_location == item.location %}
+                    selected
+                    {% endif %}>
+                    {{ item.location }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-primary">Search</button>
+
+        <a href="{{ url_for('index') }}" class="clear-link">Clear</a>
+    </form>
+
+    <div class="job-grid">
+
+        {% for job in jobs %}
+
+        <article class="job-card">
+
+            <div class="job-top">
+                <span class="job-category">{{ job.department }}</span>
+                <span class="job-type">{{ job.job_type }}</span>
+            </div>
+
+            <h3>{{ job.title }}</h3>
+
+            <p class="job-description">
+                {{ job.description }}
+            </p>
+
+            <div class="job-meta">
+                <span>📍 {{ job.location }}</span>
+            </div>
+
+            <div class="job-bottom">
+                <a href="{{ url_for('job_details', job_id=job.id) }}"
+                   class="btn-outline">
+                    View Details →
+                </a>
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="empty-state">
+            <h3>No matching opportunities found.</h3>
+            <p>Try another keyword or remove some filters.</p>
+            <a href="{{ url_for('index') }}" class="btn-primary">
+                View All Jobs
+            </a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

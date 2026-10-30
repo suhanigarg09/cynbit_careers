@@ -1,0 +1,92 @@
+
+{% extends "base.html" %}
+
+{% block title %}Apply for {{ job.title }}{% endblock %}
+
+{% block content %}
+
+<section class="form-container">
+
+    {% if success %}
+
+        <div class="success-card">
+            <div class="success-icon">✓</div>
+            <h1>Application Submitted!</h1>
+
+            <p>Your demo application has been saved successfully.</p>
+
+            <p><strong>Your tracking code:</strong></p>
+
+            <div class="tracking-code">{{ tracking_code }}</div>
+
+            <p>Save this code to check your application status.</p>
+
+            <a href="{{ url_for('applications') }}"
+               class="btn-primary">
+                Track Application
+            </a>
+        </div>
+
+    {% else %}
+
+        <a href="{{ url_for('job_details', job_id=job.id) }}"
+           class="back-link">
+            ← Back to job details
+        </a>
+
+        <div class="form-card">
+
+            <span class="eyebrow">JOB APPLICATION</span>
+            <h1>Apply for this opportunity</h1>
+
+            <p class="form-subtitle">{{ job.title }}</p>
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                <label>Full Name *</label>
+                <input type="text" name="name"
+                       value="{{ request.form.get('name', '') }}"
+                       required maxlength="100">
+
+                <label>Email Address *</label>
+                <input type="email" name="email"
+                       value="{{ request.form.get('email', '') }}"
+                       required maxlength="150">
+
+                <label>Phone Number *</label>
+                <input type="tel" name="phone"
+                       value="{{ request.form.get('phone', '') }}"
+                       required>
+
+                <label>Technical Skills *</label>
+                <textarea name="skills" rows="3"
+                          required maxlength="1000">{{ request.form.get('skills', '') }}</textarea>
+
+                <label>Tell us about yourself *</label>
+                <textarea name="introduction" rows="4"
+                          required maxlength="2000">{{ request.form.get('introduction', '') }}</textarea>
+
+                <label>Upload Resume (PDF, maximum 5 MB) *</label>
+                <input type="file" name="resume"
+                       accept=".pdf,application/pdf" required>
+
+                <button type="submit" class="btn-primary full-width">
+                    Submit Application →
+                </button>
+
+            </form>
+
+            <p class="privacy-note">
+                This is an independent demonstration. Your application
+                is stored only in the prototype database and is not
+                submitted to Cynbit's recruitment team.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

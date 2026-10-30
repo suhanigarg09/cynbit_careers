@@ -1,0 +1,81 @@
+
+{% extends "base.html" %}
+
+{% block title %}Track Application | Cynbit Careers{% endblock %}
+
+{% block content %}
+
+<section class="form-container">
+
+    <div class="form-card">
+
+        <span class="eyebrow">APPLICATION TRACKING</span>
+
+        <h1>Track your application</h1>
+
+        <p class="form-subtitle">
+            Enter your tracking code and registered email address.
+        </p>
+
+        <form method="POST">
+
+            <label>Tracking Code *</label>
+            <input type="text" name="tracking_code"
+                   required>
+
+            <label>Email Address *</label>
+            <input type="email" name="email"
+                   required>
+
+            <button type="submit" class="btn-primary full-width">
+                Check Status →
+            </button>
+
+        </form>
+
+        {% if searched %}
+
+            <hr>
+
+            {% if results %}
+
+                <h2>Application Details</h2>
+
+                {% for application in results %}
+
+                    <div class="application-result">
+
+                        <h3>{{ application.title }}</h3>
+
+                        <p>Applicant: {{ application.name }}</p>
+
+                        <p>
+                            Applied on: {{ application.created_at }}
+                        </p>
+
+                        <span class="status-badge">
+                            {{ application.status }}
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty-state">
+                    <h3>No application found.</h3>
+                    <p>
+                        Check your tracking code and email address.
+                    </p>
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
